@@ -1,0 +1,26 @@
+version: '3'
+services:
+    postgres_db:
+        image: postgres
+        environment:
+            - POSTGRES_USERNAME=postgres
+            - POSTGRES_PASSWORD=postgres_password
+            - POSTGRES_DB=simple_blog_api
+    api:
+        depends_on :
+            - postgres_db
+        image: "amitamish/simple_blog_api" 
+        build: 
+          context: .
+          dockerfile: Dockerfile.prod
+        environment:
+            - POSTGRES_HOST=postgres_db
+            - POSTGRES_PORT=5432
+            - POSTGRES_USERNAME=postgres
+            - POSTGRES_PASSWORD=postgres_password
+            - POSTGRES_DB=simple_blog_api
+        ports:
+            - "3000:3000"    
+
+
+
