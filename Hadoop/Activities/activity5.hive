@@ -1,0 +1,29 @@
+-- Drop old tables
+DROP TABLE employee;
+
+--Create employee table
+CREATE TABLE employee (id INT, name STRING, dept STRING, yoj INT, salary INT)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' TBLPROPERTIES ("skip.header.line.count"="1");
+
+-- Load data into employee table
+ LOAD DATA LOCAL INPATH '/root/EmpData.csv' INTO TABLE employee;
+
+ -- Run queries in employee table
+ SELECT * FROM employee;
+ SELECT COUNT(*) FROM employee;
+ SELECT  id, name FROM employee;
+ SELECT * FROM employee WHERE salary > 30000;
+
+ -- Exports to HDFS directory
+ INSERT OVERWRITE DIRECTORY '/user/amita/HiveOutput' ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+ SELECT * FROM employee;
+
+ -- Exports to local directory
+ INSERT OVERWRITE LOCAL DIRECTORY 'root/HiveOutput' ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+ SELECT * FROM employee;
+
+
+
+
+
+

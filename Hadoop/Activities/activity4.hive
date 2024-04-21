@@ -1,0 +1,12 @@
+--Create a table to store results
+CREATE TABLE files (line STRING);
+
+--Load data into the database using a file on your local system (NOT HDFS)
+LOAD DATA LOCAL INPATH '/file01.txt' INTO TABLE files;
+
+--Create a new table using data from the files table
+CREATE TABLE word_counts AS
+SELECT word, count(word) AS count FROM
+(SELECT explode(split(line, ' ')) AS word FROM files) w
+GROUP BY word
+ORDER BY word;
