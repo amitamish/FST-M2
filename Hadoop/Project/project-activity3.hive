@@ -1,0 +1,8 @@
+CREATE TABLE episodeIV (name STRING, line STRING)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t' TBLPROPERTIES ("skip.header.line.count"="2");
+
+LOAD DATA LOCAL INPATH '/root/inputs/episodeIV_dialogues.txt' INTO TABLE episodeIV;
+
+INSERT OVERWRITE LOCAL DIRECTORY '/user/amita/HiveOutput2' 
+SELECT COUNT(*) FROM episodeIV WHERE line LIKE '%Luke%';
+
