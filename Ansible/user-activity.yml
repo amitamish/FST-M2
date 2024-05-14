@@ -1,0 +1,14 @@
+---
+- hosts: local
+  become: true
+  tasks:
+      - name: Create a group
+        group:
+              name: wheel
+              state: present
+      - name: Create User
+        user:
+              name: testuser
+              groups: wheel
+              append: true
+              state: present
